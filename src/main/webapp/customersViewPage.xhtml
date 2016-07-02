@@ -8,59 +8,52 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        
+
         <f:view>
-
-
-
-
+            
             <h:form>
                 <h1><h:outputText value="List"/></h1>
-                <p:dataTable value="#{customerListView.customers}" var="item">
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="RegistrationDate"/>
-                        </f:facet>
-                        <h:outputText value="#{item.registrationDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
+                <p:dataTable var="customer" value="#{customerListView.customers}" widgetVar="customersTable" 
+                             emptyMessage="No customers found with given criteria" filteredValue="#{customerListView.filteredCustomers}">
+
+                    <f:facet name="header">
+                        <p:outputPanel>
+                            <h:outputText value="Search all fields:" />
+                            <p:inputText id="globalFilter" onkeyup="PF('customersTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                        </p:outputPanel>
+                    </f:facet>
+
+                    <p:column filterBy="#{customer.id}" headerText="Id" footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{customer.id}" />
                     </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Name"/>
-                        </f:facet>
-                        <h:outputText value="#{item.name}"/>
+
+                    <p:column filterBy="#{customer.name}" headerText="Name" footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{customer.name}" />
                     </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Surname"/>
-                        </f:facet>
-                        <h:outputText value="#{item.surname}"/>
+                    
+                    <p:column filterBy="#{customer.surname}" headerText="Surname" footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{customer.surname}" />
                     </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Phone"/>
-                        </f:facet>
-                        <h:outputText value="#{item.phone}"/>
+                    
+                    <p:column filterBy="#{customer.phone}" headerText="Phone number" footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{customer.phone}" />
                     </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Comment"/>
-                        </f:facet>
-                        <h:outputText value="#{item.comment}"/>
+                    
+                    <p:column filterBy="#{customer.registrationDate}" headerText="Registration date" footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{customer.registrationDate}" />
                     </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Id"/>
-                        </f:facet>
-                        <h:outputText value="#{item.id}"/>
+                    
+                    <p:column filterBy="#{customer.comment}" headerText="Comment" footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{customer.comment}" />
                     </p:column>
+                    
+                   
                 </p:dataTable>
             </h:form>
 
         </f:view>
 
-        
+
     </h:body>
 </html>
 

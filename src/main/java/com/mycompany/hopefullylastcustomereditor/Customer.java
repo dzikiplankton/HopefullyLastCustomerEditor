@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
+import javax.faces.bean.ManagedBean;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +21,7 @@ import javax.persistence.Temporal;
  * @author zakp2 <dzikiplankton@gmail.com>
  */
 @Entity
+@ManagedBean(name = "customer")
 public class Customer implements Serializable {
 
     public Customer( String name, String surname, Integer phone, String comment) {
@@ -42,7 +44,10 @@ public class Customer implements Serializable {
     private Integer phone;
     private String comment;
 
+    public Customer() {
+    }
 
+    
     public Date getRegistrationDate() {
         return registrationDate;
     }
