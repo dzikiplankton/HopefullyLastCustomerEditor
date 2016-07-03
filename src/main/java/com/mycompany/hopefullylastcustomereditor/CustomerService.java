@@ -67,8 +67,8 @@ public class CustomerService {
         return surnames[(int) (Math.random() * 10)];
     }
     
-    public int getRandomPhone() {
-        return (int) (100000000 + Math.random() * 100000000);
+    public String getRandomPhone() {
+        return Integer.toString((int) (100000000 + Math.random() * 100000000));
     }
     
     public String getRandomComment() {

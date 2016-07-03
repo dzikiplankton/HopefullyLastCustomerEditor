@@ -10,46 +10,117 @@
     <h:body>
 
         <f:view>
-            
+
             <h:form>
+                <h1><h:outputText value="New customer"/></h1>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Name:" for="name" />
+                    <h:inputText id="name" value="#{customerListView.current.name}" title="Name" required="true"/>
+                    <h:outputLabel value="Surname:" for="surname" />
+                    <h:inputText id="surname" value="#{customerListView.current.surname}" title="Surname" required="true"/>
+                    <h:outputLabel value="Phone:" for="phone" />
+                    <h:inputText id="phone" value="#{customerListView.current.phone}" title="Phone" required="true" />
+                    <h:outputLabel value="Comment:" for="comment" />
+                    <h:inputText id="comment" value="#{customerListView.current.comment}" title="Comment" />
+                    <h:outputLabel value="Id:" for="id" />
+                    <h:commandButton value="Add" action="#{customerListView.addCustomer}" />
+                </h:panelGrid>
+            </h:form>
+
+
+            <h:form id="form">
                 <h1><h:outputText value="List"/></h1>
-                <p:dataTable var="customer" value="#{customerListView.customers}" widgetVar="customersTable" 
-                             emptyMessage="No customers found with given criteria" filteredValue="#{customerListView.filteredCustomers}">
+                <p:growl id="msgs" showDetail="true"/>
+                <p:dataTable var="customer" value="#{customerListView.customers}" 
+                             paginator="true" widgetVar="customersTable" style="margin-bottom:20px"
+                             paginatorPosition="bottom"
+                             emptyMessage="No customers found with given criteria" 
+                             filteredValue="#{customerListView.filteredCustomers}"
+                             editable="true"
+                             >
+
+
+                    <p:ajax event="rowEdit"  listener="#{customerListView.onRowEdit()}"
+                            update=":form:msgs" />
+                    <p:ajax event="rowEditCancel" listener="#{customerListView.onRowCancel()}" 
+                            update=":form:msgs" />
 
                     <f:facet name="header">
                         <p:outputPanel>
                             <h:outputText value="Search all fields:" />
-                            <p:inputText id="globalFilter" onkeyup="PF('customersTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                            <p:inputText id="globalFilter" onkeyup="PF('customersTable').filter()" 
+                                         style="width:150px" placeholder="Enter keyword"/>
                         </p:outputPanel>
                     </f:facet>
 
-                    <p:column filterBy="#{customer.id}" headerText="Id" footerText="contains" filterMatchMode="contains">
+
+                    <p:column filterBy="#{customer.id}" headerText="Id" footerText="contains" 
+                              filterMatchMode="contains">
                         <h:outputText value="#{customer.id}" />
                     </p:column>
 
-                    <p:column filterBy="#{customer.name}" headerText="Name" footerText="contains" filterMatchMode="contains">
-                        <h:outputText value="#{customer.name}" />
+                    <p:column filterBy="#{customer.name}" headerText="Name" footerText="contains" 
+                              filterMatchMode="contains" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{customer.name}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText  value="#{customer.name}" required="true"
+                                              style="width:100%"/>
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
-                    
+
                     <p:column filterBy="#{customer.surname}" headerText="Surname" footerText="contains" filterMatchMode="contains">
-                        <h:outputText value="#{customer.surname}" />
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{customer.surname}" /></f:facet>
+                            <f:facet name="input"><p:inputText  required="true" value="#{customer.surname}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
                     </p:column>
-                    
+
                     <p:column filterBy="#{customer.phone}" headerText="Phone number" footerText="contains" filterMatchMode="contains">
-                        <h:outputText value="#{customer.phone}" />
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{customer.phone}" /></f:facet>
+                            <f:facet name="input"><p:inputText  required="true" value="#{customer.phone}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
                     </p:column>
-                    
+
                     <p:column filterBy="#{customer.registrationDate}" headerText="Registration date" footerText="contains" filterMatchMode="contains">
-                        <h:outputText value="#{customer.registrationDate}" />
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{customer.registrationDate}" >
+                                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText  value="#{customer.registrationDate}" style="width:100%">
+                                    <f:convertDateTime pattern="d-M-yyyy" />
+                                </p:inputText>
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
-                    
+
                     <p:column filterBy="#{customer.comment}" headerText="Comment" footerText="contains" filterMatchMode="contains">
-                        <h:outputText value="#{customer.comment}" />
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{customer.comment}" /></f:facet>
+                            <f:facet name="input"><p:inputText  value="#{customer.comment}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
                     </p:column>
-                    
-                   
+
+                    <p:column style="width:32px">
+                        <p:rowEditor />
+                    </p:column>
+                    <p:column style="width:32px">
+                        <h:commandButton value="Destroy" action="#{customerListView.destroyCustomer(customer)}" />
+                    </p:column>
                 </p:dataTable>
+
+
             </h:form>
+
+
+
 
         </f:view>
 

@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
 import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,10 +22,11 @@ import javax.persistence.Temporal;
  * @author zakp2 <dzikiplankton@gmail.com>
  */
 @Entity
+@ViewScoped
 @ManagedBean(name = "customer")
 public class Customer implements Serializable {
 
-    public Customer( String name, String surname, Integer phone, String comment) {
+    public Customer( String name, String surname, String phone, String comment) {
         this.id = UUID.randomUUID().toString().substring(0, 8);
         this.registrationDate = new Date().from(Instant.now());
         this.name = name;
@@ -41,7 +43,7 @@ public class Customer implements Serializable {
     private Date registrationDate;
     private String name;
     private String surname;
-    private Integer phone;
+    private String phone;
     private String comment;
 
     public Customer() {
@@ -72,11 +74,11 @@ public class Customer implements Serializable {
         this.surname = surname;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
