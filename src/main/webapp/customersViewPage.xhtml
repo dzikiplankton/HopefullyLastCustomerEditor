@@ -37,6 +37,7 @@
                              emptyMessage="No customers found with given criteria" 
                              filteredValue="#{customerListView.filteredCustomers}"
                              editable="true"
+                             id="cTable"
                              >
 
 
@@ -111,8 +112,9 @@
                     <p:column style="width:32px">
                         <p:rowEditor />
                     </p:column>
-                    <p:column style="width:32px">
-                        <h:commandButton value="Destroy" action="#{customerListView.destroyCustomer(customer)}" />
+                    <p:column style="width:32px" >
+                        <p:commandButton oncomplete="PF('customersTable').filter()" icon="ui-icon-close" title="remove from cart"
+                                         actionListener="#{customerListView.destroyCustomer(customer)}" />
                     </p:column>
                 </p:dataTable>
 

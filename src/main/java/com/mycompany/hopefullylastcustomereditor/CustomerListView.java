@@ -79,6 +79,7 @@ public class CustomerListView implements Serializable {
     
     public void destroyCustomer(Customer desCus){
         customers.remove(desCus);
+       //boolean remove = filteredCustomers.remove(desCus);
     }
     
     public void onRowEdit() {
